@@ -2,15 +2,14 @@ package cm.deone.jetestefirebase;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,6 +20,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -28,6 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText mPassword;
     Button mRegisterBtn;
     Button mAnnulerBtn;
+    TextView mHaveAccount;
 
     ProgressDialog progressDialog;
 
@@ -47,10 +51,11 @@ public class RegisterActivity extends AppCompatActivity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-        mEmail = (EditText) findViewById(R.id.edt_email);
-        mPassword = (EditText) findViewById(R.id.edt_password);
-        mRegisterBtn = (Button)findViewById(R.id.btn_register);
-        mAnnulerBtn = (Button)findViewById(R.id.btn_annuller);
+        mEmail = findViewById(R.id.edt_email);
+        mPassword = findViewById(R.id.edt_password);
+        mHaveAccount = findViewById(R.id.tv_have_account);
+        mRegisterBtn = findViewById(R.id.btn_register);
+        mAnnulerBtn = findViewById(R.id.btn_annuller);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Registering User...");
@@ -79,6 +84,14 @@ public class RegisterActivity extends AppCompatActivity {
                 finish(); return;
             }
         });
+
+        mHaveAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                finish(); return;
+            }
+        });
     }
 
     private void registerUser(String email, String password) {
@@ -91,10 +104,26 @@ public class RegisterActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             progressDialog.dismiss();
                             FirebaseUser user = mAuth.getCurrentUser();
+
+                            assert user != null;
+                            String email = user.getEmail();
+                            String uid = user.getUid();
+
+                            HashMap<Object, String> hashMap = new HashMap<>();
+                            hashMap.put("email", email);
+                            hashMap.put("uid", uid);
+                            hashMap.put("name", "");
+                            hashMap.put("phone", "");
+                            hashMap.put("image", "");
+
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference reference = database.getReference("users");
+                            reference.child(user.getUid()).setValue(hashMap);
+
                             Toast.makeText(RegisterActivity.this, "Registered... \n"+user.getEmail(),
                                     Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(RegisterActivity.this, UserProfileActivity.class));
-                            finish(); return;
+                            startActivity(new Intent(RegisterActivity.this, ProfileActivity.class));
+                            finish();
                         } else {
                             // If sign in fails, display a message to the user.
                             progressDialog.dismiss();
