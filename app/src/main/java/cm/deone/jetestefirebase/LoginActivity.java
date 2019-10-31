@@ -85,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
         mAnnulerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish(); return;
             }
         });
@@ -181,7 +182,7 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
                             startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
-                            finish();
+                            finish(); return;
                         } else {
                             progressDialog.dismiss();
                             // If sign in fails, display a message to the user.

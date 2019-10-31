@@ -81,6 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
         mAnnulerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                 finish(); return;
             }
         });
@@ -123,7 +124,7 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.makeText(RegisterActivity.this, "Registered... \n"+user.getEmail(),
                                     Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(RegisterActivity.this, DashboardActivity.class));
-                            finish();
+                            finish(); return;
                         } else {
                             // If sign in fails, display a message to the user.
                             progressDialog.dismiss();
