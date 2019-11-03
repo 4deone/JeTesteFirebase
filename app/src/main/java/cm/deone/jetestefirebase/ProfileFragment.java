@@ -21,6 +21,9 @@ import androidx.fragment.app.Fragment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -402,5 +405,38 @@ public class ProfileFragment extends Fragment {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK);
         galleryIntent.setType("image/*");
         startActivityForResult(galleryIntent, IMAGE_PICK_GALLERY_CODE);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.main_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_logout){
+            mAuth.signOut();
+            checkUserStatus();
+        }else if (item.getItemId() == R.id.app_bar_search){
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void checkUserStatus(){
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null){
+
+        }else {
+            startActivity(new Intent(getActivity(), MainActivity.class));
+            getActivity().finish(); return;
+        }
     }
 }

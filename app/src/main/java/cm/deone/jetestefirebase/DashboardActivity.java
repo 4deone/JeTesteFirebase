@@ -70,6 +70,13 @@ public class DashboardActivity extends AppCompatActivity {
                     fragmentTransactionTwo.replace(R.id.content, usersFragment, "");
                     fragmentTransactionTwo.commit();
                     return true;
+                case R.id.nav_chats:
+                    actionBar.setTitle("CHATS");
+                    ChatListFragment chatListFragment = new ChatListFragment();
+                    FragmentTransaction fragmentTransactionTrois = getSupportFragmentManager().beginTransaction();
+                    fragmentTransactionTrois.replace(R.id.content, chatListFragment, "");
+                    fragmentTransactionTrois.commit();
+                    return true;
                     default:
             }
             return false;
@@ -90,21 +97,6 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onStart() {
         checkUserStatus();
         super.onStart();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_logout){
-            firebaseAuth.signOut();
-            checkUserStatus();
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
