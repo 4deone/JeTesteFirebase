@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/messageLayout"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.blogspot.atifsoftwares.circularimageview.CircularImageView
+            android:id="@+id/img_profile"
+            app:c_border_color="@null"
+            android:src="@drawable/ic_default_img"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+
+        <TextView
+            android:id="@+id/tv_left_message"
+            android:textSize="16sp"
+            android:layout_weight="1"
+            android:textColor="@color/colorBlack"
+            android:background="@drawable/bg_receiver"
+            android:padding="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Son message" />
+
+        <TextView
+            android:id="@+id/tv_receiver_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10/08/2019 05:10PM"
+            android:textSize="12sp"
+            android:textColor="@color/colorBlack"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_receiver_voir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="delivered"
+        android:gravity="end"
+        android:textAlignment="textEnd"/>
+
+</LinearLayout>
