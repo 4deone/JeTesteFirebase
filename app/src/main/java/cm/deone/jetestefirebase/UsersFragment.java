@@ -136,6 +136,8 @@ public class UsersFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.main_menu, menu);
 
+        menu.findItem(R.id.menu_add_post).setVisible(false);
+
         MenuItem menuItem = menu.findItem(R.id.app_bar_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -168,8 +170,8 @@ public class UsersFragment extends Fragment {
         if (item.getItemId() == R.id.menu_logout){
             firebaseAuth.signOut();
             checkUserStatus();
-        }else if (item.getItemId() == R.id.app_bar_search){
-
+        }else if (item.getItemId() == R.id.menu_add_post){
+            startActivity(new Intent(getActivity(), AddPostActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -178,9 +180,6 @@ public class UsersFragment extends Fragment {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user != null){
 
-        }else {
-            startActivity(new Intent(getActivity(), MainActivity.class));
-            getActivity().finish(); return;
         }
     }
 

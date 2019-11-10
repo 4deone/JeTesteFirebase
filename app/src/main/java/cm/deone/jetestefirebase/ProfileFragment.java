@@ -5,7 +5,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
-import android.content.Context;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,7 +14,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
+
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -29,7 +29,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,7 +48,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.PicassoProvider;
+
 
 import java.util.HashMap;
 
@@ -297,7 +297,8 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         switch (requestCode){
             case CAMERA_REQUEST_CODE:{
                 if (grantResults.length>0){
@@ -314,7 +315,7 @@ public class ProfileFragment extends Fragment {
             break;
             case STORAGE_REQUEST_CODE:{
                 if (grantResults.length>0){
-                    boolean writeStorageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+                    boolean writeStorageAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                     if (writeStorageAccepted){
                         pickFromGallery();
                     }else {
@@ -424,8 +425,8 @@ public class ProfileFragment extends Fragment {
         if (item.getItemId() == R.id.menu_logout){
             mAuth.signOut();
             checkUserStatus();
-        }else if (item.getItemId() == R.id.app_bar_search){
-
+        }else if (item.getItemId() == R.id.menu_add_post){
+            startActivity(new Intent(getActivity(), AddPostActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -439,4 +440,5 @@ public class ProfileFragment extends Fragment {
             getActivity().finish(); return;
         }
     }
+
 }

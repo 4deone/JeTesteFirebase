@@ -150,4 +150,5 @@ public class RegisterActivity extends AppCompatActivity {
         onBackPressed();
         return super.onSupportNavigateUp();
     }
+
 }

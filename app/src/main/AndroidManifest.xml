@@ -16,8 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".ChatActivity"
-            android:theme="@style/AppThemeNo"></activity>
+        <activity android:name=".AddPostActivity"></activity>
+        <activity
+            android:name=".ChatActivity"
+            android:theme="@style/AppThemeNo" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".DashboardActivity" />
         <activity android:name=".RegisterActivity" />

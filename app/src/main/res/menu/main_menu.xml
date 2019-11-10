@@ -11,4 +11,9 @@
         android:title="SEARCH"
         app:showAsAction="always"
         app:actionViewClass="android.widget.SearchView" />
+    <item
+        android:id="@+id/menu_add_post"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_add_white"
+        android:title="ADD POST" />
 </menu>
