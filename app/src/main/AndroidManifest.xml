@@ -16,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".AddPostActivity"></activity>
+        <activity android:name=".PostDetailActivity"></activity>
+        <activity android:name=".ThereProfileActivity" />
+        <activity android:name=".AddPostActivity" />
         <activity
             android:name=".ChatActivity"
             android:theme="@style/AppThemeNo" />

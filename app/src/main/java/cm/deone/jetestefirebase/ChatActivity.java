@@ -292,7 +292,8 @@ public class ChatActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
 
-        menu.findItem(R.id.app_bar_search).setVisible(false);
+        menu.findItem(R.id.menu_search).setVisible(false);
+        menu.findItem(R.id.menu_add_post).setVisible(false);
 
         return super.onCreateOptionsMenu(menu);
     }

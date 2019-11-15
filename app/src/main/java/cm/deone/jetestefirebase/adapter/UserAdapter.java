@@ -1,6 +1,7 @@
 package cm.deone.jetestefirebase.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -18,12 +20,13 @@ import java.util.List;
 
 import cm.deone.jetestefirebase.ChatActivity;
 import cm.deone.jetestefirebase.R;
+import cm.deone.jetestefirebase.ThereProfileActivity;
 import cm.deone.jetestefirebase.model.User;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyHolder> {
 
-    Context context;
-    List<User> userList;
+    private Context context;
+    private List<User> userList;
 
     public UserAdapter(Context context, List<User> userList) {
         this.context = context;
@@ -59,6 +62,23 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyHolder> {
                 Intent intent = new Intent(context, ChatActivity.class);
                 intent.putExtra("hisUid", hisUID);
                 context.startActivity(intent);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setItems(new String[]{"Profile", "Chat"}, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which==0){
+                            Intent intent = new Intent(context, ThereProfileActivity.class);
+                            intent.putExtra("uid", hisUID);
+                            context.startActivity(intent);
+                        }else if (which==1){
+                            Intent intent = new Intent(context, ThereProfileActivity.class);
+                            intent.putExtra("hisUid", hisUID);
+                            context.startActivity(intent);
+                        }
+                    }
+                });
+                builder.create().show();
             }
         });
     }

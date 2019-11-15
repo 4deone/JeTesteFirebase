@@ -24,6 +24,7 @@
             </ImageView>
 
             <LinearLayout
+                android:id="@+id/ly_profile_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -75,6 +76,12 @@
 
             </LinearLayout>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_user_post"
+                android:layout_below="@+id/ly_profile_user"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
         </RelativeLayout>
 
     </ScrollView>
@@ -88,6 +95,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true" />
-
 
 </RelativeLayout>

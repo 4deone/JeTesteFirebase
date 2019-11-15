@@ -7,6 +7,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -19,6 +21,8 @@ public class DashboardActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
 
     private ActionBar actionBar;
+
+    private String mUID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +87,12 @@ public class DashboardActivity extends AppCompatActivity {
     private void checkUserStatus(){
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user != null){
+            mUID = user.getUid();
 
+            SharedPreferences sp = getSharedPreferences("SP_USER", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("Current_USERID", mUID);
+            editor.apply();
         }else {
             startActivity(new Intent(DashboardActivity.this, MainActivity.class));
             finish(); return;

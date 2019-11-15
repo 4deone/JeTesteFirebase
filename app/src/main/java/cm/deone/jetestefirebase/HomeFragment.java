@@ -1,10 +1,12 @@
 package cm.deone.jetestefirebase;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,6 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import cm.deone.jetestefirebase.adapter.PostAdapter;
 import cm.deone.jetestefirebase.model.Post;
@@ -52,13 +55,13 @@ public class HomeFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        firebaseAuth = firebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
 
         recyclerView = view.findViewById(R.id.recycleview_posts);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -92,8 +95,8 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getActivity(), ""+ databaseError.getMessage(),
-                        Toast.LENGTH_SHORT).show();
+                DashboardActivity activity = (DashboardActivity)getActivity();
+                Toast.makeText(activity, ""+ databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -107,6 +110,7 @@ public class HomeFragment extends Fragment {
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
                     Post post = ds.getValue(Post.class);
 
+                    assert post != null;
                     if (post.getpTitle().toLowerCase().contains(searchQuery.toLowerCase()) ||
                             post.getpDescr().toLowerCase().contains(searchQuery.toLowerCase())){
                         postList.add(post);
@@ -133,9 +137,9 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.main_menu, menu);
-        MenuItem item = menu.findItem(R.id.app_bar_search);
+        MenuItem item = menu.findItem(R.id.menu_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -161,8 +165,9 @@ public class HomeFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.menu_logout){
             firebaseAuth.signOut();
             checkUserStatus();
@@ -172,13 +177,14 @@ public class HomeFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void checkUserStatus(){
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user != null){
 
         }else {
             startActivity(new Intent(getActivity(), MainActivity.class));
-            getActivity().finish(); return;
+            Objects.requireNonNull(getActivity()).finish();
         }
     }
 

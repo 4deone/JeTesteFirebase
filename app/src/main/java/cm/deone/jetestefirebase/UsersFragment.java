@@ -138,7 +138,7 @@ public class UsersFragment extends Fragment {
 
         menu.findItem(R.id.menu_add_post).setVisible(false);
 
-        MenuItem menuItem = menu.findItem(R.id.app_bar_search);
+        MenuItem menuItem = menu.findItem(R.id.menu_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
